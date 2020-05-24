@@ -16,6 +16,7 @@ function displayCurrentSession() {
         session.style.backgroundColor = "rgba(0, 0, 0, 0)"; 
     });
     sessions[timerStats.currentSession].style.backgroundColor = "rgba(0, 0, 0, 0.25)";
+    resetTimer();
 }
 
 function newTimer() {    
@@ -42,8 +43,22 @@ function stopTimer() {
 }
 
 function resetTimer() {
-    durationInSeconds = 10;
-    display.textContent = "00:10";
+    switch (timerStats.currentSession) {
+        case 0:
+            durationInSeconds = pomodoroDuration;
+            break;
+        case 1:
+            durationInSeconds = shortBreakDuration;
+            break;
+        case 2:
+            durationInSeconds = longBreakDuration;
+            break;
+        default:
+            console.log("Error: resetTimer()");
+            break;
+    }
+    let durationInMinutes = durationInSeconds/60;
+    display.textContent = `${durationInMinutes < 10 ? "0"+durationInMinutes : durationInMinutes}:00`;
 }
 
 function updateCount() {
@@ -84,6 +99,22 @@ function nextSession() {
     }
 }
 
+function forceChosenSession(session) {
+    switch (session.id) {
+        case "pomodoro":
+            timerStats.currentSession = 0;
+            break;
+        case "short-break":
+            timerStats.currentSession = 1;
+            break;
+        case "long-break":
+            timerStats.currentSession = 2;
+            break;
+    }
+    stopTimer()
+    displayCurrentSession();
+}
+
 const display = document.querySelector(".timer");
 const sessions = document.querySelectorAll(".session-buttons");
 let timerStats = {
@@ -93,15 +124,28 @@ let timerStats = {
     currentSession: 0,
 }
 sessions[timerStats.currentSession].style.backgroundColor = "rgba(0, 0, 0, 0.25)"; // initialize current session as pomodoro
+sessions.forEach(session => session.addEventListener("click", () => {
+    forceChosenSession(session);
+}));
 
 const controlButtons = document.querySelectorAll(".control-buttons");
 controlButtons.forEach(button => button.addEventListener("click", function() {
     buttonPressed(button);
 }));
 
-let pomodoroDuration = 8;
-let shortBreakDuration = 4;
-let longBreakDuration = 6;
+let pomodoroDuration = 25*60;
+let shortBreakDuration = 5*60;
+let longBreakDuration = 15*60;
+const saveButton = document.querySelector("#save-button");
+saveButton.addEventListener("click", () => {
+    pomodoroDuration = Number(document.querySelector("#pomodoro-duration").value) * 60;
+    shortBreakDuration = Number(document.querySelector("#short-break-duration").value) * 60;
+    longBreakDuration = Number(document.querySelector("#long-break-duration").value) * 60;
+    alert("Saved");
+    resetTimer();
+})
+
+let durationInSeconds;
 let timer;
 const startButton = document.querySelector("#start-button");
 startButton.addEventListener("click", () => {
@@ -123,5 +167,3 @@ const stopButton = document.querySelector("#stop-button");
 stopButton.addEventListener("click", stopTimer);
 const resetButton = document.querySelector("#reset-button");
 resetButton.addEventListener("click", resetTimer);
-
-

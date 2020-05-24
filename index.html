@@ -11,7 +11,7 @@
                 <button id="short-break" class="session-buttons">Short Break</button>
                 <button id="long-break" class="session-buttons">Long Break</button>
             </div>
-            <div class="timer">00:00</div>
+            <div class="timer">25:00</div>
             <div id="control-container" class="non-timer-container">
                 <button id="start-button" class="control-buttons">START</button>
                 <button id="stop-button" class="control-buttons">STOP</button>
@@ -19,7 +19,30 @@
             </div>
             <div id="pomodoro-counter">0</div>
         </div>
-        <div class="settings-div"></div>
+        <div class="secondary-container">
+            <h2>Time (minutes)</h2>
+            <div class="settings-div">
+                <div class="indiv-settings-div">
+                    <label for="pomodoro-duration">
+                        Pomodoro
+                        <input type="number" class="durations" id="pomodoro-duration" name="durations" value="25" min="1" max="60">
+                    </label>    
+                </div>      
+                <div class="indiv-settings-div"> 
+                    <label for="short-break-duration">
+                        Short break
+                        <input type="number" class="durations" id="short-break-duration" name="durations" value="5" min="1" max="60">
+                    </label>  
+                </div>
+                <div class="indiv-settings-div">
+                    <label for="long-break-duration">
+                        Long break
+                        <input type="number" class="durations" id="long-break-duration" name="durations" value="15" min="1" max="60">
+                    </label>  
+                </div>
+            </div>
+            <button id="save-button">Save</button>
+        </div>
         <script type="text/javascript" src="script.js"></script>
     </body>
 </html>
