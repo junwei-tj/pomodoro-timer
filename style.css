@@ -4,6 +4,7 @@
 }
 
 .main-container {
+    position: relative;
     background-color: #ff7f69;
     margin: 50px auto auto auto;
     width: 500px;
@@ -51,3 +52,16 @@
     box-shadow: 0px 6px rgb(235, 235, 235);
 }
 
+#pomodoro-counter {
+    width: 20px;
+    height: 20px;
+    text-align: center;
+  
+    position: absolute;
+    bottom: 10px;
+    right: 15px;
+    background-color: white;
+    color: #ff7f69;
+    font-weight: bold;
+    border-radius: 15px;
+}
